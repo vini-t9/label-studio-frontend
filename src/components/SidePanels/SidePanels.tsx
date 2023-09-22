@@ -25,7 +25,7 @@ interface SidePanelsProps {
 
 interface PanelBBox {
   width: number;
-  height:  number;
+  height: number;
   left: number;
   top: number;
   relativeLeft: number;
