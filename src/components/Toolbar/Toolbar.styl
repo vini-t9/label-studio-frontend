@@ -1,11 +1,14 @@
 .toolbar
-  width 40px
+  display flex
+  flex-direction row
   background #FFFFFF
   box-shadow 0px 0px 0px 1px rgba(0, 0, 0, 0.05), 0px 5px 10px rgba(0, 0, 0, 0.1)
   border-radius 7px
-  position sticky
-  top 70px
-  margin-top 50px
+  align-items center
+  
+  .horizontal-toolbar
+    &__group:not(:last-child)
+      margin-right 10px
 
   &::before
     height 12px
@@ -14,9 +17,11 @@
     content ""
     border-radius 7px 7px 0 0
 
+  &__group
+    display flex
+
   &__group ~ &__group
-    margin-top 4px
-    border-top 2px solid rgba(0, 0, 0, 0.05)
+    display contents
 
   &_expanded
     width auto

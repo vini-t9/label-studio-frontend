@@ -27,7 +27,7 @@ export const Toolbar = inject('store')(observer(({ store, tools, expanded }) => 
     return 'right';
   }, [toolbar, windowSize]);
 
-  const toolGroups = tools.filter(t => !t.dynamic).reduce((res,tool) => {
+  const toolGroups = tools.filter(t => !t.dynamic).reduce((res, tool) => {
     const group = res[tool.group] ?? [];
 
     group.push(tool);
@@ -38,25 +38,49 @@ export const Toolbar = inject('store')(observer(({ store, tools, expanded }) => 
   const smartTools = tools.filter(t => t.dynamic);
 
   return (
+  // <ToolbarProvider value={{ expanded, alignment }}>
+  //   <Block ref={(el) => setToolbar(el)} name="toolbar" mod={{ alignment, expanded }}>
+  //     {Object.entries(toolGroups).map(([name, tools], i) => {
+  //       const visibleTools = tools.filter(t => t.viewClass);
+
+  //       return visibleTools.length ? (
+  //         <Elem name="group" key={`toolset-${name}-${i}`}>
+  //           {visibleTools.sort((a, b) => a.index - b.index).map((tool, i) => {
+  //             const ToolComponent = tool.viewClass;
+
+    //             return (
+    //               <ToolComponent key={`${tool.toolName}-${i}`}/>
+    //             );
+    //           })}
+    //         </Elem>
+    //       ) : null;
+    //     })}
+    //     {store.autoAnnotation && (
+    //       <SmartTools tools={smartTools}/>
+    //     )}
+    //   </Block>
+    // </ToolbarProvider>
     <ToolbarProvider value={{ expanded, alignment }}>
       <Block ref={(el) => setToolbar(el)} name="toolbar" mod={{ alignment, expanded }}>
-        {Object.entries(toolGroups).map(([name, tools], i) => {
-          const visibleTools = tools.filter(t => t.viewClass);
+        <Elem name="group" className="horizontal-toolbar">
+          {Object.entries(toolGroups).map(([name, tools], i) => {
+            const visibleTools = tools.filter(t => t.viewClass);
 
-          return visibleTools.length ? (
-            <Elem name="group" key={`toolset-${name}-${i}`}>
-              {visibleTools.sort((a, b) => a.index - b.index).map((tool, i) => {
-                const ToolComponent = tool.viewClass;
+            return visibleTools.length ? (
+              <Elem name="group" key={`toolset-${name}-${i}`}>
+                {visibleTools.sort((a, b) => a.index - b.index).map((tool, i) => {
+                  const ToolComponent = tool.viewClass;
 
-                return (
-                  <ToolComponent key={`${tool.toolName}-${i}`}/>
-                );
-              })}
-            </Elem>
-          ) : null;
-        })}
+                  return (
+                    <ToolComponent key={`${tool.toolName}-${i}`} />
+                  );
+                })}
+              </Elem>
+            ) : null;
+          })}
+        </Elem>
         {store.autoAnnotation && (
-          <SmartTools tools={smartTools}/>
+          <SmartTools tools={smartTools} />
         )}
       </Block>
     </ToolbarProvider>
